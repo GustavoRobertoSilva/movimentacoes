@@ -15,9 +15,12 @@ class ViewController: UIViewController {
     let tipos = ["Debito","Credito"]
     
     @IBOutlet weak var descricao: UITextView!
-    @IBOutlet weak var tipo: UITextView!
-    @IBOutlet weak var data: UITextView!    
-    @IBOutlet weak var valor: UITextView!
+    @IBOutlet weak var tipo: UITextField!
+    
+    @IBOutlet weak var dataSelecionada: UIDatePicker!
+    
+    @IBOutlet weak var data: UITextView!
+    @IBOutlet weak var valor: UITextField!
     
     var context: NSManagedObjectContext!
     var movimentacao: NSManagedObject!
@@ -26,8 +29,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.descricao.becomeFirstResponder()
-        
+        self.dataSelecionada.becomeFirstResponder()
         
         if movimentacao != nil{
             if let descricaoRecuperada = movimentacao.value(forKey: "descricao"){
@@ -42,11 +44,17 @@ class ViewController: UIViewController {
             if let dataRecuperada = movimentacao.value(forKey: "data"){
                 self.data.text = String(describing: dataRecuperada)
             }
+            
+//            if let dataSelecionadaRecuperada = movimentacao.value(forKey: "data"){
+//                self.dataSelecionada.date = dataSelecionadaRecuperada
+//            }
+            
         }else{
             self.descricao.text = ""
             self.valor.text = ""
             self.tipo.text = ""
             self.data.text = ""
+            self.dataSelecionada.date = Date();
         }
                
         
@@ -70,9 +78,9 @@ class ViewController: UIViewController {
         let movimentation = NSEntityDescription.insertNewObject(forEntityName: "Movement", into: context)
         
         movimentation.setValue(self.descricao.text, forKey: "descricao")
-        movimentation.setValue(Date(), forKey: "data")
+        movimentation.setValue(self.dataSelecionada.date, forKey: "data")
         movimentation.setValue(self.tipo.text, forKey: "tipo")
-        movimentation.setValue(11.9, forKey: "valor")
+        movimentation.setValue(Decimal(string: self.valor.text!), forKey: "valor")
         
         do {
             try context.save()
@@ -86,11 +94,9 @@ class ViewController: UIViewController {
     func atualizar(){
         
         movimentacao.setValue(self.descricao.text, forKey: "descricao")
-//        movimentacao.setValue(self.data.text, forKey: "data")
-        movimentacao.setValue(Date(), forKey: "data")
+        movimentacao.setValue(self.dataSelecionada.date, forKey: "data")
         movimentacao.setValue(self.tipo.text, forKey: "tipo")
-//        movimentacao.setValue(self.valor.text, forKey: "valor")
-        movimentacao.setValue(12.99, forKey: "valor")
+        movimentacao.setValue(Decimal(string: self.valor.text!), forKey: "valor")
         
         do {
             try context.save()

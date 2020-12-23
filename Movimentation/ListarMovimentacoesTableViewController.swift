@@ -84,10 +84,12 @@ class ListarMovimentacoesTableViewController: UITableViewController {
         
         let novaData = dateFormatter.string(from: dataRecuperada as! Date)
         
+        var valorString = valorRecuperado as! Decimal
+        
+        print("Valor String \(valorString)")
+        
         cell.textLabel?.text = descricaoRecuperado as? String
-//        var detail = String(describing: novaData)
-//        detail = detail + valorRecuperado.text
-        let val = String(format:"Data: %@ - Valor: %d - Tipo: %@", novaData, valorRecuperado! as! Decimal as CVarArg, tipoRecuperado as! String)
+        let val = String(format:"Data: %@ - Valor: %@ - Tipo: %@", novaData, valorString.description, tipoRecuperado as! String)
         
         cell.detailTextLabel?.text = String(describing: val)
         
