@@ -55,9 +55,8 @@ class ViewController: UIViewController {
         
     }
     
-    
-    @IBAction func salvarMovimentacao(_ sender: Any) {
-           
+    @IBAction func salvar(_ sender: Any) {
+               
         if movimentacao == nil{
             self.salvar()
         }else{
@@ -71,9 +70,9 @@ class ViewController: UIViewController {
         let movimentation = NSEntityDescription.insertNewObject(forEntityName: "Movement", into: context)
         
         movimentation.setValue(self.descricao.text, forKey: "descricao")
-        movimentation.setValue(self.tipo.text, forKey: "data")
+        movimentation.setValue(Date(), forKey: "data")
         movimentation.setValue(self.tipo.text, forKey: "tipo")
-        movimentation.setValue(self.valor.text, forKey: "valor")
+        movimentation.setValue(11.9, forKey: "valor")
         
         do {
             try context.save()
@@ -87,10 +86,12 @@ class ViewController: UIViewController {
     func atualizar(){
         
         movimentacao.setValue(self.descricao.text, forKey: "descricao")
-        movimentacao.setValue(self.tipo.text, forKey: "data")
+//        movimentacao.setValue(self.data.text, forKey: "data")
+        movimentacao.setValue(Date(), forKey: "data")
         movimentacao.setValue(self.tipo.text, forKey: "tipo")
-        movimentacao.setValue(self.valor.text, forKey: "valor")
-                
+//        movimentacao.setValue(self.valor.text, forKey: "valor")
+        movimentacao.setValue(12.99, forKey: "valor")
+        
         do {
             try context.save()
             print("Movimentacao Atualizada com Sucesso !!!!")

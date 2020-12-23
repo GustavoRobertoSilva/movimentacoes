@@ -26,9 +26,11 @@ class ListarMovimentacoesTableViewController: UITableViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         context = appDelegate.persistentContainer.viewContext
-     
-
-
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        recuperarMovimentacoes()        
     }
 
     func recuperarMovimentacoes(){
@@ -83,7 +85,11 @@ class ListarMovimentacoesTableViewController: UITableViewController {
         let novaData = dateFormatter.string(from: dataRecuperada as! Date)
         
         cell.textLabel?.text = descricaoRecuperado as? String
-        cell.detailTextLabel?.text = String(describing: novaData)
+//        var detail = String(describing: novaData)
+//        detail = detail + valorRecuperado.text
+        let val = String(format:"Data: %@ - Valor: %d - Tipo: %@", novaData, valorRecuperado! as! Decimal as CVarArg, tipoRecuperado as! String)
+        
+        cell.detailTextLabel?.text = String(describing: val)
         
         return cell
     }
